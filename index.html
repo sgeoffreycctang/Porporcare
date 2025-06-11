@@ -118,7 +118,6 @@
 
     <script>
         // Data structure to hold all content in three languages
-        // In a real application, this would be fetched from a server/API
         const contentData = {
             zh: {
                 title: "婆婆的愛心照顧手冊",
@@ -136,7 +135,7 @@
                     {
                         id: "weekly-menu",
                         title: "一週愛心餐單與做法",
-                        content: `### 一週愛心餐單總覽\n| 日期 | 早餐 | 午餐 | 晚餐 |\n| :--- | :--- | :--- | :--- |\n| 第一日 | 白粥, 水煮蛋, 燙菠菜 | 蒸三文魚, 清炒菜心, 糙米飯 | 冬瓜瘦肉湯, 蒸豆腐, 燙小棠菜 |\n| 第二日 | 紅豆粥, 全麥吐司, 蘋果片 | 清蒸雞胸, 炒西蘭花, 糙米飯 | 番茄蛋湯, 蒸南瓜, 燙油菜 |\n| 第三日 | 燕麥粥, 水煮蛋, 奇異果 | 蒸鱸魚, 炒雜菜, 糙米飯 | 紫菜瘦肉粥, 燙空心菜, 蒸馬鈴薯 |\n| 第四日 | 無糖豆漿, 雜糧饅頭, 香蕉 | 瘦肉蒸蛋, 炒菠菜, 糙米飯 | 魚片湯, 蒸番薯, 燙菜心 |\n| 第五日 | 白粥配鹹菜, 水煮蛋, 提子乾 | 蒸雞腿肉, 炒小棠菜, 糙米飯 | 南瓜瘦肉粥, 燙西蘭花, 蒸豆腐 |\n\n*詳細做法請參考Google文件。*`
+                        content: `### 一週愛心餐單總覽\n| 日期 | 早餐 | 午餐 | 晚餐 |\n| :--- | :--- | :--- | :--- |\n| 第一日 | 白粥, 水煮蛋, 燙菠菜 | 蒸三文魚, 清炒菜心, 糙米飯 | 冬瓜瘦肉湯, 蒸豆腐, 燙小棠菜 |\n| 第二日 | 紅豆粥, 全麥吐司配牛油果泥, 蘋果片 | 清蒸雞胸, 炒西蘭花, 糙米飯 | 番茄蛋湯, 蒸南瓜, 燙油菜 |\n| 第三日 | 燕麥粥配藍莓, 水煮蛋, 奇異果 | 蒸鱸魚, 炒雜菜, 糙米飯 | 紫菜瘦肉粥, 燙空心菜, 蒸馬鈴薯 |\n| 第四日 | 無糖豆漿, 雜糧饅頭, 香蕉 | 瘦肉蒸蛋, 炒菠菜, 糙米飯 | 魚片湯, 蒸番薯, 燙菜心 |\n| 第五日 | 白粥配鹹菜, 水煮蛋, 提子乾 | 蒸雞腿肉, 炒小棠菜, 糙米飯 | 南瓜瘦肉粥, 燙西蘭花, 蒸豆腐 |\n| 第六日 | 燕麥片配核桃碎, 全麥吐司, 蘋果 | 清蒸鯛魚, 炒油菜, 糙米飯 | 雞絲冬粉湯, 蒸南瓜, 燙菠菜 |\n| 第七日 | 紅豆粥, 水煮蛋, 奇異果 | 蒸瘦肉餅, 炒菜心, 糙米飯 | 冬瓜蛤蜊湯, 燙空心菜, 蒸馬鈴薯 |\n\n*詳細做法請參考Google文件。*`
                     },
                     {
                         id: "daily-exercise",
@@ -171,7 +170,7 @@
                     {
                         id: "weekly-menu",
                         title: "Weekly Meal Plan & Recipes",
-                        content: `### Weekly Meal Plan Overview\n| Day | Breakfast | Lunch | Dinner |\n| :--- | :--- | :--- | :--- |\n| Day 1 | Congee, Boiled Egg, Boiled Spinach | Steamed Salmon, Stir-fried Choy Sum, Brown Rice | Winter Melon & Pork Soup, Steamed Tofu |\n| Day 2 | Red Bean Congee, Whole Wheat Toast, Apple Slices | Steamed Chicken Breast, Stir-fried Broccoli, Brown Rice | Tomato Egg Soup, Steamed Pumpkin |\n| Day 3 | Oatmeal, Boiled Egg, Kiwi | Steamed Sea Bass, Stir-fried Mixed Veggies, Brown Rice | Seaweed & Pork Congee, Boiled Water Spinach |\n| Day 4 | Soy Milk, Steamed Bun, Banana | Steamed Egg with Pork, Stir-fried Spinach, Brown Rice | Fish Fillet Soup, Steamed Sweet Potato, Boiled Choy Sum |\n| Day 5 | Congee with Pickles, Boiled Egg, Raisins | Steamed Chicken, Stir-fried Bok Choy, Brown Rice | Pumpkin Pork Congee, Boiled Broccoli, Steamed Tofu |\n\n*For detailed recipes, please refer to the Google Document.*`
+                        content: `### Weekly Meal Plan Overview\n| Day | Breakfast | Lunch | Dinner |\n| :--- | :--- | :--- | :--- |\n| Day 1 | Congee, Boiled Egg, Boiled Spinach | Steamed Salmon, Stir-fried Choy Sum, Brown Rice | Winter Melon & Pork Soup, Steamed Tofu, Boiled Bok Choy |\n| Day 2 | Red Bean Congee, Whole Wheat Toast with Avocado, Apple Slices | Steamed Chicken Breast, Stir-fried Broccoli, Brown Rice | Tomato Egg Soup, Steamed Pumpkin, Boiled You Choy |\n| Day 3 | Oatmeal with Blueberries, Boiled Egg, Kiwi | Steamed Sea Bass, Stir-fried Mixed Vegetables, Brown Rice | Seaweed & Pork Congee, Boiled Water Spinach, Steamed Potato |\n| Day 4 | Unsweetened Soy Milk, Mixed Grain Bun, Banana | Steamed Egg with Minced Pork, Stir-fried Spinach, Brown Rice | Fish Fillet Soup, Steamed Sweet Potato, Boiled Choy Sum |\n| Day 5 | Congee with Pickles, Boiled Egg, Raisins | Steamed Chicken Thigh, Stir-fried Bok Choy, Brown Rice | Pumpkin & Pork Congee, Boiled Broccoli, Steamed Tofu |\n| Day 6 | Oatmeal with Walnuts, Whole Wheat Toast, Apple | Steamed Tilapia, Stir-fried You Choy, Brown Rice | Chicken & Vermicelli Soup, Steamed Pumpkin, Boiled Spinach |\n| Day 7 | Red Bean Congee, Boiled Egg, Kiwi | Steamed Pork Patty, Stir-fried Choy Sum, Brown Rice | Clam & Winter Melon Soup, Boiled Water Spinach, Steamed Potato |\n\n*For detailed recipes, please refer to the Google Document.*`
                     },
                     {
                         id: "daily-exercise",
@@ -206,7 +205,7 @@
                     {
                         id: "weekly-menu",
                         title: "Rencana Menu Mingguan & Resep",
-                        content: `### Tinjauan Rencana Menu Mingguan\n| Hari | Sarapan | Makan Siang | Makan Malam |\n| :--- | :--- | :--- | :--- |\n| Hari 1 | Bubur, Telur Rebus, Bayam Rebus | Salmon Kukus, Tumis Choy Sum, Nasi Merah | Sup Labu & Babi, Tahu Kukus |\n| Hari 2 | Bubur Kacang Merah, Roti Gandum, Irisan Apel | Dada Ayam Kukus, Tumis Brokoli, Nasi Merah | Sup Telur Tomat, Labu Kukus |\n| Hari 3 | Oatmeal, Telur Rebus, Kiwi | Ikan Laut Kukus, Tumis Sayuran Campur, Nasi Merah | Bubur Rumput Laut & Babi, Kangkung Rebus |\n| Hari 4 | Susu Kedelai, Bakpao, Pisang | Telur Kukus dengan Babi, Tumis Bayam, Nasi Merah | Sup Ikan, Ubi Jalar Kukus, Tumis Choy Sum |\n| Hari 5 | Bubur dengan Acar, Telur Rebus, Kismis | Ayam Kukus, Tumis Bok Choy, Nasi Merah | Bubur Labu Babi, Brokoli Rebus, Tahu Kukus |\n\n*Untuk resep detail, silakan merujuk ke Dokumen Google.*`
+                        content: `### Tinjauan Rencana Menu Mingguan\n| Hari | Sarapan | Makan Siang | Makan Malam |\n| :--- | :--- | :--- | :--- |\n| Hari 1 | Bubur, Telur Rebus, Bayam Rebus | Salmon Kukus, Tumis Choy Sum, Nasi Merah | Sup Labu & Babi, Tahu Kukus, Bok Choy Rebus |\n| Hari 2 | Bubur Kacang Merah, Roti Gandum dengan Alpukat, Irisan Apel | Dada Ayam Kukus, Tumis Brokoli, Nasi Merah | Sup Telur Tomat, Labu Kukus, You Choy Rebus |\n| Hari 3 | Oatmeal dengan Blueberry, Telur Rebus, Kiwi | Ikan Laut Kukus, Tumis Sayuran Campur, Nasi Merah | Bubur Rumput Laut & Babi, Kangkung Rebus, Kentang Kukus |\n| Hari 4 | Susu Kedelai Tanpa Gula, Roti Gandum, Pisang | Telur Kukus dengan Daging Cincang, Tumis Bayam, Nasi Merah | Sup Ikan, Ubi Jalar Kukus, Choy Sum Rebus |\n| Hari 5 | Bubur dengan Acar, Telur Rebus, Kismis | Paha Ayam Kukus, Tumis Bok Choy, Nasi Merah | Bubur Labu & Babi, Brokoli Rebus, Tahu Kukus |\n| Hari 6 | Oatmeal dengan Kenari, Roti Gandum, Apel | Ikan Nila Kukus, Tumis You Choy, Nasi Merah | Sup Bihun Ayam, Labu Kukus, Bayam Rebus |\n| Hari 7 | Bubur Kacang Merah, Telur Rebus, Kiwi | Daging Babi Kukus, Tumis Choy Sum, Nasi Merah | Sup Kerang & Labu, Kangkung Rebus, Kentang Kukus |\n\n*Untuk resep detail, silakan merujuk ke Dokumen Google.*`
                     },
                     {
                         id: "daily-exercise",
