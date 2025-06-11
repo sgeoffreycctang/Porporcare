@@ -12,30 +12,35 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
-        .content-section {
-            display: none;
-        }
-        .content-section.active {
-            display: block;
-        }
         .nav-link.active {
             background-color: #4f46e5;
             color: white;
         }
         /* Basic styling for prose content generated from markdown */
         .prose h3 {
-            font-size: 1.25rem;
+            font-size: 1.5rem; /* Larger than h4 */
             font-weight: 700;
+            margin-top: 1.5rem;
             margin-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+        .prose h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 1.25rem;
+            margin-bottom: 0.75rem;
         }
         .prose p {
             margin-bottom: 1rem;
             line-height: 1.6;
         }
-        .prose ul {
-            list-style-type: disc;
+        .prose ul, .prose ol {
             padding-left: 1.5rem;
             margin-bottom: 1rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
         }
         .prose table {
             width: 100%;
@@ -51,6 +56,12 @@
             background-color: #f7fafc;
             font-weight: 600;
         }
+        .prose blockquote {
+            border-left: 4px solid #cbd5e0;
+            padding-left: 1rem;
+            margin-left: 0;
+            color: #4a5568;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -60,7 +71,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <h1 id="header-title" class="text-xl font-bold text-gray-900">婆婆的愛心照顧手冊</h1>
+                    <h1 id="header-title" class="text-lg md:text-xl font-bold text-gray-900 truncate">婆婆的愛心照顧手冊</h1>
                 </div>
                 <div class="flex items-center">
                      <!-- Language Switcher -->
@@ -107,7 +118,7 @@
 
     <!-- Mobile Menu Modal -->
     <div id="mobile-menu" class="fixed inset-0 bg-gray-800 bg-opacity-75 z-50 hidden">
-        <div class="bg-white w-64 h-full absolute right-0 shadow-lg p-4">
+        <div class="bg-white w-64 h-full absolute right-0 shadow-lg p-4 overflow-y-auto">
             <button id="close-mobile-menu" class="float-right text-gray-500 hover:text-gray-600 text-2xl font-bold">&times;</button>
             <nav id="mobile-nav" class="mt-8">
                  <!-- Mobile nav links will be inserted here by JS -->
@@ -117,219 +128,162 @@
 
 
     <script>
-        // Data structure to hold all content in three languages
         const contentData = {
             zh: {
                 title: "婆婆的愛心照顧手冊",
                 sections: [
-                    { 
-                        id: "introduction", 
-                        title: "引言",
-                        content: `### 給親愛的[幫手姐姐姓名/幫手姐姐]\n歡迎您加入我們的家庭，成為照顧婆婆的重要一員。我們衷心感謝您即將付出的愛心與努力。這本手冊是特別為您準備的，希望能為您在照顧婆婆的日常起居、飲食、運動及家務處理等方面，提供清晰的指引和實用的建議。\n我們深信，透過良好的溝通和合作，您定能為婆婆提供最妥善的照顧。這本手冊是一個起點，我們鼓勵您在實際工作中，若有任何疑問或發現更適合婆婆的照顧方式，隨時與我們坦誠交流。讓我們一起努力，為婆婆營造一個舒適、安全、愉快的晚年生活。`
-                    },
-                    {
-                        id: "diet-care",
-                        title: "飲食照顧重點",
-                        content: `為婆婆準備膳食時，需特別留意以下幾項原則，確保飲食既符合她的口味，又能滿足健康需求。\n\n**飲食原則**\n* **清淡口味**: 婆婆的飲食應以清淡為主，盡量減少鹽、糖及油的使用。烹調時，多利用薑、蔥等天然食材提味。\n* **容易咀嚼消化**: 所有食材都應處理得細軟。例如，魚肉應先去骨，肉類則切成薄片或剁碎，蔬菜亦應煮至軟腍。\n* **均衡營養**: 每日膳食應包含多種類別的食物，以確保營養均衡。\n* **少食多餐 (如適用)**: 若婆婆胃口較小，可以考慮採取少食多餐的方式。\n\n**每日補水提醒**\n充足的水分對長者健康至關重要。請確保婆婆每日飲用足夠的水分。\n\n**食材選購與保鮮**\n建議每週初前往市場或超市，採購新鮮的蔬菜、魚類、瘦肉等。`
-                    },
-                    {
-                        id: "weekly-menu",
-                        title: "一週愛心餐單與做法",
-                        content: `### 一週愛心餐單總覽\n| 日期 | 早餐 | 午餐 | 晚餐 |\n| :--- | :--- | :--- | :--- |\n| 第一日 | 白粥, 水煮蛋, 燙菠菜 | 蒸三文魚, 清炒菜心, 糙米飯 | 冬瓜瘦肉湯, 蒸豆腐, 燙小棠菜 |\n| 第二日 | 紅豆粥, 全麥吐司配牛油果泥, 蘋果片 | 清蒸雞胸, 炒西蘭花, 糙米飯 | 番茄蛋湯, 蒸南瓜, 燙油菜 |\n| 第三日 | 燕麥粥配藍莓, 水煮蛋, 奇異果 | 蒸鱸魚, 炒雜菜, 糙米飯 | 紫菜瘦肉粥, 燙空心菜, 蒸馬鈴薯 |\n| 第四日 | 無糖豆漿, 雜糧饅頭, 香蕉 | 瘦肉蒸蛋, 炒菠菜, 糙米飯 | 魚片湯, 蒸番薯, 燙菜心 |\n| 第五日 | 白粥配鹹菜, 水煮蛋, 提子乾 | 蒸雞腿肉, 炒小棠菜, 糙米飯 | 南瓜瘦肉粥, 燙西蘭花, 蒸豆腐 |\n| 第六日 | 燕麥片配核桃碎, 全麥吐司, 蘋果 | 清蒸鯛魚, 炒油菜, 糙米飯 | 雞絲冬粉湯, 蒸南瓜, 燙菠菜 |\n| 第七日 | 紅豆粥, 水煮蛋, 奇異果 | 蒸瘦肉餅, 炒菜心, 糙米飯 | 冬瓜蛤蜊湯, 燙空心菜, 蒸馬鈴薯 |\n\n*詳細做法請參考Google文件。*`
-                    },
-                    {
-                        id: "daily-exercise",
-                        title: "每日輕鬆運動",
-                        content: `適量的運動對婆婆的身心健康都非常有益。\n\n**運動前準備及注意事項**\n* **安全第一**: 確保環境安全，移除可能絆倒的障礙物。\n* **量力而為**: 運動應循序漸進。\n* **陪伴與扶助**: 在婆婆進行運動時，您應在旁陪伴。\n\n**建議運動項目**\n* **散步**: 最簡單方便的運動。\n* **椅子操**: 安坐椅子上進行多種運動。\n* **簡易太極招式**: 有助改善平衡力。`
-                    },
-                    {
-                        id: "housekeeping",
-                        title: "家務助理時間表",
-                        content: `維持家居環境的清潔整齊，對婆婆的健康和安全同樣重要。\n\n**每日家務**\n* **廚房**: 清洗碗碟、清潔爐面。\n* **婆婆房間**: 整理床舖，保持整潔。\n* **浴室**: 清潔座廁、洗手盆，保持乾爽。\n\n**每週家務**\n* 徹底清潔浴室和廚房。\n* 吸塵及拖抹全屋地板。\n* 更換床單、被套等。`
-                    },
-                    {
-                        id: "emergency",
-                        title: "緊急情況應對",
-                        content: `為緊急情況作好準備是非常重要的。\n\n**重要聯絡號碼**\n| 聯絡人/服務機構 | 電話號碼 |\n| :--- | :--- |\n| 緊急求助 (警察/消防/救護車) | 999 |\n| 僱主姓名 | [請填上電話號碼] |\n| 其他家人 | [請填上電話號碼] |\n\n**應對步驟**\n1.  保持冷靜\n2.  確保安全\n3.  評估情況\n4.  求助`
-                    }
+                    { id: "introduction", title: "引言", content: `### 給親愛的[幫手姐姐姓名/幫手姐姐]\n歡迎您加入我們的家庭，成為照顧婆婆的重要一員。我們衷心感謝您即將付出的愛心與努力。這本手冊是特別為您準備的，希望能為您在照顧婆婆的日常起居、飲食、運動及家務處理等方面，提供清晰的指引和實用的建議。\n我們深信，透過良好的溝通和合作，您定能為婆婆提供最妥善的照顧。這本手冊是一個起點，我們鼓勵您在實際工作中，若有任何疑問或發現更適合婆婆的照顧方式，隨時與我們坦誠交流。讓我們一起努力，為婆婆營造一個舒適、安全、愉快的晚年生活。` },
+                    { id: "part1", title: "第一部分：日常起居飲食", content: "" },
+                    { id: "diet-care", title: "1.1 飲食照顧重點", content: `#### 飲食原則\n* **清淡口味**: 婆婆的飲食應以清淡為主，盡量減少鹽、糖及油的使用。烹調時，多利用薑、蔥等天然食材提味，這亦是廣東菜的傳統做法，能帶出食物本身的鮮味。應避免使用味精或含鹽量高的醬料，以免增加身體負擔。\n* **容易咀嚼消化**: 考慮到長者的咀嚼和吞嚥能力可能有所下降，所有食材都應處理得細軟。例如，魚肉應先去骨，肉類則切成薄片或剁碎，蔬菜亦應煮至軟腍。粥品和湯水是極佳的選擇，有助消化吸收。\n* **均衡營養**: 每日膳食應包含多種類別的食物，以確保營養均衡。主要包括五穀類、肉類及蛋白質類、蔬菜瓜果類，以及奶類及鈣質豐富的食物。\n* **少食多餐 (如適用)**: 若婆婆胃口較小，或一次不能進食太多份量，可以考慮採取少食多餐的方式。這有助於維持血糖穩定，並確保每日攝取足夠的營養。\n\n#### 每日補水提醒\n充足的水分對長者健康至關重要。請確保婆婆每日飲用足夠的水分。除了白開水外，也可以適量提供淡菊花茶或清淡的湯水。\n\n#### 食材選購與保鮮\n* **市場採購**: 建議每週初前往市場或超市，採購新鮮的蔬菜、魚類、瘦肉、雞胸肉及豆腐等食材。購買後應妥善存放在雪櫃內保鮮。\n* **常備乾貨**: 家中應常備一些耐放的乾貨，例如糙米、燕麥片、紅豆、紫菜、冬粉等。\n* **調味料**: 基本的調味料應包括生抽、麻油、橄欖油、食鹽、薑及蔥。` },
+                    { id: "weekly-menu", title: "1.2 一週愛心餐單與做法", content: `### 一週愛心餐單總覽\n| 日期 | 早餐 | 午餐 | 晚餐 |\n| :--- | :--- | :--- | :--- |\n| 第一日 | 白粥, 水煮蛋, 燙菠菜 | 蒸三文魚, 清炒菜心, 糙米飯 | 冬瓜瘦肉湯, 蒸豆腐, 燙小棠菜 |\n| 第二日 | 紅豆粥, 全麥吐司配牛油果泥, 蘋果片 | 清蒸雞胸, 炒西蘭花, 糙米飯 | 番茄蛋湯, 蒸南瓜, 燙油菜 |\n| 第三日 | 燕麥粥配藍莓, 水煮蛋, 奇異果 | 蒸鱸魚, 炒雜菜, 糙米飯 | 紫菜瘦肉粥, 燙空心菜, 蒸馬鈴薯 |\n| 第四日 | 無糖豆漿, 雜糧饅頭, 香蕉 | 瘦肉蒸蛋, 炒菠菜, 糙米飯 | 魚片湯, 蒸番薯, 燙菜心 |\n| 第五日 | 白粥配鹹菜, 水煮蛋, 提子乾 | 蒸雞腿肉, 炒小棠菜, 糙米飯 | 南瓜瘦肉粥, 燙西蘭花, 蒸豆腐 |\n| 第六日 | 燕麥片配核桃碎, 全麥吐司, 蘋果 | 清蒸鯛魚, 炒油菜, 糙米飯 | 雞絲冬粉湯, 蒸南瓜, 燙菠菜 |\n| 第七日 | 紅豆粥, 水煮蛋, 奇異果 | 蒸瘦肉餅, 炒菜心, 糙米飯 | 冬瓜蛤蜊湯, 燙空心菜, 蒸馬鈴薯 |\n\n> 為了方便您記憶和操作，我們會為每道菜準備簡單的食譜卡片，上面會列出主要步驟。` },
+                    { id: "daily-exercise", title: "1.3 每日輕鬆運動", content: `#### 運動前準備及注意事項\n* **安全第一**: 確保婆婆周圍的環境安全，移除可能絆倒的障礙物。選擇合適、舒適、透氣的衣物和合腳、防滑的鞋子。\n* **量力而為**: 運動應循序漸進。若婆婆在運動過程中感到任何不適，應立即停止。\n* **時間**: 避免在飯後立即進行運動，建議在飯後約1小時才進行。\n* **陪伴与扶助**: 在婆婆进行运动，尤其是平衡运动时，您应在旁陪伴，并在有需要时提供扶持。\n\n#### 建議運動項目\n* **散步**: 最簡單方便的運動。每日累積至少30分鐘。\n* **椅子操**: 例如坐式踏步、手臂上舉、雙腳伸展等。\n* **簡易太極招式**: 動作柔和，有助改善平衡力。\n* **平衡防跌運動**: 例如單腳站立 (需有扶持)。\n* **強化肌肉活動**: 利用自身重量、水樽或沙包等進行肌肉強化運動。\n\n| 時段 | 建議活動 | 時長 (分鐘) | 備註/重點 |\n| :--- | :--- | :--- | :--- |\n| 早上 | 輕柔伸展運動 或 簡單椅子操 | 10-15 | 喚醒身體，增加關節靈活性 |\n| 上午/下午 | 散步 (室內或戶外) 或 簡易太極招式 | 15-20 | 輕量帶氧運動，鍛鍊心肺功能 |\n| 傍晚 | 平衡防跌運動 或 輕量肌肉強化運動 | 10-15 | 強化平衡感，維持肌肉力量 |` },
+                    { id: "housekeeping", title: "1.4 家務助理時間表", content: `維持家居環境的清潔整齊，對婆婆的健康和安全同樣重要。\n\n| 類別 | 任務 | 頻率 | 備註 |\n| :--- | :--- | :--- | :--- |\n| 每日家務 | 婆婆房間鋪床、收拾整齊 | 每日 | 確保通道暢通 |\n| | 清洗廁所、洗手盆，保持浴室乾爽 | 每日 | 防滑 |\n| | 清洗餐具，清潔煮食範圍 | 每日三餐後 | 保持衛生 |\n| | 倒垃圾，更換垃圾袋 | 每日 | |\n| 每週家務 | 徹底清潔廚房和浴室 | 每週一次 | |\n| | 全屋吸塵、拖地 | 每週一至兩次 | |\n| | 更換床單、枕袋、被套 | 每週一次 | |\n| | 購買餸菜及必需品 | 每週一至兩次 | 配合一週餐單 |\n| 每月家務 | 清潔冷氣機隔塵網、抽氣扇、雪櫃內部 | 每月一次 | |`},
+                    { id: "part2", title: "第二部分：照顧實用技巧", content: "" },
+                    { id: "daily-living", title: "2.1 日常生活照顧", content: `#### 協助婆婆安全活動與轉移\n* **扶抱技巧**: 移動前先解釋，讓婆婆身體靠近您，腰背挺直，屈膝發力，避免扭腰。\n* **起床/坐下**: 起床時先在床邊坐一會兒，預防頭暈。坐下時引導她慢慢坐。\n\n#### 個人衛生護理\n* **口腔清潔**: 每日協助婆婆清潔口腔或假牙，動作要輕柔。\n* **沐浴/擦身**: 確保浴室溫暖及防滑，尊重其私隱。\n* **足部護理**: 每日用溫水清洗雙腳並徹底抹乾，檢查是否有紅腫破損。\n* **穿脫衣物**: 選擇鬆身舒適衣物。若一側肢體不便，先為患側穿衣，脫衣時則先脫健側。\n\n#### 預防跌倒錦囊\n* **家居環境**: 保持通道暢通，光線充足，使用防滑地氈，安裝扶手。\n* **個人因素**: 穿著合適防滑的鞋子，留意藥物可能引致的副作用。` },
+                    { id: "health-monitoring", title: "2.2 健康狀況關注", content: `您是每天與婆婆相處時間最長的人，請密切留意並及時報告健康狀況的細微變化。\n\n#### 日常健康觀察\n* **一般狀況**: 留意胃口、睡眠、情緒、精神狀態的改變。\n* **皮膚**: 定期檢查是否有紅腫、損傷、壓瘡。\n* **排泄**: 留意是否有便秘、腹瀉、小便困難等。\n* **痛楚**: 留意是否有任何痛楚的表示。\n\n#### 輕微不適的處理\n* **發燒**: 穿輕便衣物，多喝水，定時量體溫。\n* **便秘**: 多飲水，增加膳食纖維。\n\n#### 何時通知僱主\n* 婆婆健康狀況出現任何顯著或突然的變化。\n* 發生任何意外，例如跌倒。\n* 婆婆出現嚴重不適，如高燒不退、呼吸困難等。` },
+                    { id: "communication", title: "2.3 溝通與文化適應", content: `#### 了解婆婆的口味與習慣\n* 請謹記婆婆偏好傳統廣東口味，著重薑蔥調味及蒸、煮等烹調方法，力求清淡健康。\n* 應避免烹調印尼菜式中常見的辛辣或濃味食物。\n\n#### 語言溝通\n* 可以嘗試使用簡單的廣東話詞彙或短句。我們鼓勵您主動學習。\n* 您也可以輔以身體語言、手勢、圖片，或手機翻譯應用程式協助溝通。\n\n#### 尊重與耐心\n與婆婆溝通時，請時刻保持尊重和友善的態度，語氣溫和，給予婆婆充足的時間。` },
+                    { id: "emergency-response", title: "2.4 緊急情況應對", content: `#### 重要聯絡號碼\n| 聯絡人/服務機構 | 電話號碼 |\n| :--- | :--- | :--- |\n| 緊急求助 (警察/消防/救護車) | 999 |\n| 僱主姓名 ([請填上]) | [請填上電話號碼] |\n| 其他家人 ([請填上姓名及關係])| [請填上電話號碼] |\n| 婆婆的醫生 ([請填上醫生姓名]) | [請填上診所電話號碼] |\n| 大廈管理處/保安部 | [請填上電話號碼] |\n\n#### 應對步驟\n1.  **保持冷靜**: 深呼吸，盡力讓自己鎮定下來。\n2.  **確保安全**: 首先確保您和婆婆都處於安全的環境。\n3.  **評估情況**: 快速評估婆婆的狀況。\n4.  **求助**: 若情況嚴重，應立即致電「999」召喚救護車，然後通知我們。` },
+                    { id: "part3", title: "第三部分：溫馨提示", content: "" },
+                    { id: "warm-tips", title: "3.1-3.4 綜合提示", content: `#### 活用食譜卡\n* 在工作初期，請多加利用我們準備的食譜卡，它們能幫助您輕鬆掌握烹調步驟。\n\n#### 廚房工作安全\n* **刀具使用**: 使用時要專心，用畢後立即清洗存放。\n* **爐火與熱油**: 烹調時切勿離開爐火，小心熱油濺出。\n* **蒸鍋使用**: 開啟蒸鍋蓋時，小心高溫蒸汽。\n\n#### 與我們保持溝通\n* 我們非常重視與您的溝通。有任何疑問、不確定或擔憂，請不要猶豫，隨時向我們提出。\n\n#### 工作初期：互相適應與調整\n* 我們明白您初到新環境需要時間適應。遇到不明白的地方，請隨時發問。我們會盡力提供協助和指導。` }
                 ]
             },
             en: {
                 title: "Grandmother's Care Handbook",
                 sections: [
-                    { 
-                        id: "introduction", 
-                        title: "Introduction",
-                        content: `### To our dear [Helper's Name/Helper]\nWelcome to our family. We sincerely thank you for your love and effort. This handbook is prepared for you to provide clear guidance on daily care, diet, exercise, and household chores for Grandma.\nWe believe that through good communication and cooperation, you can provide the best care. If you have any questions or find better ways to care for her, please feel free to communicate with us. Let's work together to create a comfortable, safe, and pleasant life for Grandma.`
-                    },
-                    {
-                        id: "diet-care",
-                        title: "Dietary Care Points",
-                        content: `When preparing meals for Grandma, pay special attention to the following principles to ensure the food is both palatable and healthy.\n\n**Dietary Principles**\n* **Light Flavor**: Meals should be light, reducing salt, sugar, and oil. Use natural ingredients like ginger and spring onions for flavor.\n* **Easy to Chew and Digest**: All ingredients should be soft. For example, fish should be deboned, meat sliced thinly or minced, and vegetables cooked until soft.\n* **Balanced Nutrition**: Daily meals should include a variety of food types.\n* **Small, Frequent Meals (if applicable)**: If Grandma has a small appetite, consider this approach.\n\n**Daily Hydration Reminder**\nEnsure Grandma drinks enough water throughout the day.\n\n**Ingredient Shopping and Storage**\nIt is recommended to buy fresh vegetables, fish, and lean meat at the beginning of the week.`
-                    },
-                    {
-                        id: "weekly-menu",
-                        title: "Weekly Meal Plan & Recipes",
-                        content: `### Weekly Meal Plan Overview\n| Day | Breakfast | Lunch | Dinner |\n| :--- | :--- | :--- | :--- |\n| Day 1 | Congee, Boiled Egg, Boiled Spinach | Steamed Salmon, Stir-fried Choy Sum, Brown Rice | Winter Melon & Pork Soup, Steamed Tofu, Boiled Bok Choy |\n| Day 2 | Red Bean Congee, Whole Wheat Toast with Avocado, Apple Slices | Steamed Chicken Breast, Stir-fried Broccoli, Brown Rice | Tomato Egg Soup, Steamed Pumpkin, Boiled You Choy |\n| Day 3 | Oatmeal with Blueberries, Boiled Egg, Kiwi | Steamed Sea Bass, Stir-fried Mixed Vegetables, Brown Rice | Seaweed & Pork Congee, Boiled Water Spinach, Steamed Potato |\n| Day 4 | Unsweetened Soy Milk, Mixed Grain Bun, Banana | Steamed Egg with Minced Pork, Stir-fried Spinach, Brown Rice | Fish Fillet Soup, Steamed Sweet Potato, Boiled Choy Sum |\n| Day 5 | Congee with Pickles, Boiled Egg, Raisins | Steamed Chicken Thigh, Stir-fried Bok Choy, Brown Rice | Pumpkin & Pork Congee, Boiled Broccoli, Steamed Tofu |\n| Day 6 | Oatmeal with Walnuts, Whole Wheat Toast, Apple | Steamed Tilapia, Stir-fried You Choy, Brown Rice | Chicken & Vermicelli Soup, Steamed Pumpkin, Boiled Spinach |\n| Day 7 | Red Bean Congee, Boiled Egg, Kiwi | Steamed Pork Patty, Stir-fried Choy Sum, Brown Rice | Clam & Winter Melon Soup, Boiled Water Spinach, Steamed Potato |\n\n*For detailed recipes, please refer to the Google Document.*`
-                    },
-                    {
-                        id: "daily-exercise",
-                        title: "Daily Light Exercise",
-                        content: `Appropriate exercise is very beneficial for Grandma's physical and mental health.\n\n**Preparation and Precautions**\n* **Safety First**: Ensure the environment is safe and free of obstacles.\n* **Pace Accordingly**: Exercise should be progressive.\n* **Companionship and Support**: You should accompany her during exercise.\n\n**Recommended Exercises**\n* **Walking**: The simplest form of exercise.\n* **Chair Exercises**: Various exercises can be done while seated.\n* **Simple Tai Chi Moves**: Helps improve balance.`
-                    },
-                    {
-                        id: "housekeeping",
-                        title: "Housekeeping Schedule",
-                        content: `Maintaining a clean and tidy home is equally important for Grandma's health and safety.\n\n**Daily Chores**\n* **Kitchen**: Wash dishes, clean stove top.\n* **Grandma's Room**: Make the bed, keep it tidy.\n* **Bathroom**: Clean the toilet and sink, keep the floor dry.\n\n**Weekly Chores**\n* Thoroughly clean the bathroom and kitchen.\n* Vacuum and mop all floors.\n* Change bed linens, etc.`
-                    },
-                    {
-                        id: "emergency",
-                        title: "Emergency Response",
-                        content: `It is very important to be prepared for emergencies.\n\n**Important Contact Numbers**\n| Contact/Service | Phone Number |\n| :--- | :--- |\n| Emergency (Police/Fire/Ambulance) | 999 |\n| Employer's Name | [Please fill in phone number] |\n| Other Family Member | [Please fill in phone number] |\n\n**Response Steps**\n1.  Stay calm\n2.  Ensure safety\n3.  Assess the situation\n4.  Call for help`
-                    }
+                    { id: "introduction", title: "Introduction", content: `### To our dear [Helper's Name/Helper]\nWelcome to our family. We sincerely thank you for your love and effort. This handbook is prepared for you to provide clear guidance on daily care, diet, exercise, and household chores for Grandma.\nWe believe that through good communication and cooperation, you can provide the best care. This handbook is a starting point. We encourage you, if you have any questions or discover a more suitable way of caring for Grandma, to communicate with us frankly at any time. Let's work together to create a comfortable, safe, and pleasant life for Grandma.` },
+                    { id: "part1", title: "Part 1: Daily Life & Diet", content: "" },
+                    { id: "diet-care", title: "1.1 Dietary Care Points", content: `#### Dietary Principles\n* **Light Flavor**: Grandma's diet should be light, minimizing the use of salt, sugar, and oil. When cooking, use natural ingredients like ginger and spring onions for flavor, which is a traditional Cantonese practice. Avoid using MSG or high-salt sauces.\n* **Easy to Chew and Digest**: All ingredients should be soft. For example, fish should be deboned, meat thinly sliced or minced, and vegetables cooked until tender. Congee and soups are excellent choices.\n* **Balanced Nutrition**: Daily meals should include a variety of foods: grains, meat and protein, vegetables and fruits, and dairy or calcium-rich foods.\n* **Small, Frequent Meals (if applicable)**: If Grandma has a small appetite, consider serving smaller meals more frequently to help maintain stable blood sugar and ensure adequate nutrition.\n\n#### Daily Hydration Reminder\nAdequate hydration is crucial. Ensure Grandma drinks enough water daily. Besides plain water, light chrysanthemum tea or clear soups can also be provided.\n\n#### Ingredient Shopping and Storage\n* **Market Shopping**: It's recommended to purchase fresh vegetables, fish, lean meat, chicken breast, and tofu at the beginning of the week and store them properly in the refrigerator.\n* **Pantry Staples**: Keep non-perishable items like brown rice, oatmeal, red beans, seaweed, and vermicelli on hand.\n* **Seasonings**: Basic seasonings should include soy sauce, sesame oil, olive oil, salt, ginger, and spring onions.` },
+                    { id: "weekly-menu", title: "1.2 Weekly Meal Plan & Recipes", content: `### Weekly Meal Plan Overview\n| Day | Breakfast | Lunch | Dinner |\n| :--- | :--- | :--- | :--- |\n| Day 1 | Congee, Boiled Egg, Boiled Spinach | Steamed Salmon, Stir-fried Choy Sum, Brown Rice | Winter Melon & Pork Soup, Steamed Tofu, Boiled Bok Choy |\n| Day 2 | Red Bean Congee, Whole Wheat Toast with Avocado, Apple Slices | Steamed Chicken Breast, Stir-fried Broccoli, Brown Rice | Tomato Egg Soup, Steamed Pumpkin, Boiled You Choy |\n| Day 3 | Oatmeal with Blueberries, Boiled Egg, Kiwi | Steamed Sea Bass, Stir-fried Mixed Vegetables, Brown Rice | Seaweed & Pork Congee, Boiled Water Spinach, Steamed Potato |\n| Day 4 | Unsweetened Soy Milk, Mixed Grain Bun, Banana | Steamed Egg with Minced Pork, Stir-fried Spinach, Brown Rice | Fish Fillet Soup, Steamed Sweet Potato, Boiled Choy Sum |\n| Day 5 | Congee with Pickles, Boiled Egg, Raisins | Steamed Chicken Thigh, Stir-fried Bok Choy, Brown Rice | Pumpkin & Pork Congee, Boiled Broccoli, Steamed Tofu |\n| Day 6 | Oatmeal with Walnuts, Whole Wheat Toast, Apple | Steamed Tilapia, Stir-fried You Choy, Brown Rice | Chicken & Vermicelli Soup, Steamed Pumpkin, Boiled Spinach |\n| Day 7 | Red Bean Congee, Boiled Egg, Kiwi | Steamed Pork Patty, Stir-fried Choy Sum, Brown Rice | Clam & Winter Melon Soup, Boiled Water Spinach, Steamed Potato |\n\n> For your convenience, we will prepare simple recipe cards for each dish, listing the main steps.` },
+                    { id: "daily-exercise", title: "1.3 Daily Light Exercise", content: `#### Preparation and Precautions\n* **Safety First**: Ensure the surroundings are safe and free of tripping hazards. Choose suitable, comfortable, breathable clothing and well-fitting, non-slip shoes.\n* **Pace Accordingly**: Exercise should be gradual. If Grandma feels any discomfort, stop immediately.\n* **Timing**: Avoid exercising immediately after meals. It's best to wait about 1 hour.\n* **Companionship and Support**: You should accompany and support Grandma during exercise, especially for balance exercises.\n\n#### Recommended Exercises\n* **Walking**: The simplest and most convenient exercise. Aim for at least 30 minutes daily.\n* **Chair Exercises**: Such as seated marching, arm raises, and leg extensions.\n* **Simple Tai Chi Moves**: Gentle movements that help improve balance.\n* **Balance and Fall Prevention Exercises**: Such as single-leg stands (with support).\n* **Muscle-Strengthening Activities**: Use body weight, water bottles, or sandbags for resistance.\n\n| Period | Suggested Activity | Duration (min) | Notes/Focus |\n| :--- | :--- | :--- | :--- |\n| Morning | Gentle stretching or simple chair exercises | 10-15 | Awaken the body, increase joint flexibility |\n| AM/PM | Walking (indoor/outdoor) or simple Tai Chi | 15-20 | Light aerobic exercise, good for heart and lungs |\n| Evening | Balance exercises or light muscle strengthening | 10-15 | Enhance balance, maintain muscle strength |` },
+                    { id: "housekeeping", title: "1.4 Housekeeping Schedule", content: `Maintaining a clean and tidy home is equally important for Grandma's health and safety.\n\n| Category | Task | Frequency | Notes |\n| :--- | :--- | :--- | :--- |\n| Daily | Make bed, tidy Grandma's room | Daily | Ensure clear pathways |\n| | Clean toilet, sink; keep bathroom dry | Daily | Prevent slipping |\n| | Wash dishes, clean cooking area | After each meal | Maintain hygiene |\n| | Empty trash, replace bags | Daily | |\n| Weekly | Thoroughly clean kitchen and bathroom | Once a week | |\n| | Vacuum and mop all floors | 1-2 times a week | |\n| | Change bed linens, pillowcases, duvet cover | Once a week | |\n| | Purchase groceries and necessities | 1-2 times a week | Coordinate with meal plan |\n| Monthly| Clean A/C filter, exhaust fan, refrigerator interior| Once a month | |`},
+                    { id: "part2", title: "Part 2: Practical Caregiving Skills", content: "" },
+                    { id: "daily-living", title: "2.1 Daily Living Care", content: `#### Assisting with Safe Movement and Transfers\n* **Lifting/Supporting Skills**: Explain before moving, keep Grandma close to your body, maintain a straight back, bend your knees, and use your leg muscles. Avoid twisting your waist.\n* **Getting Up/Sitting Down**: When getting up, have her sit on the edge of the bed for a moment to prevent dizziness. Guide her to sit down slowly.\n\n#### Personal Hygiene Care\n* **Oral Hygiene**: Assist with brushing teeth or cleaning dentures daily. Be gentle.\n* **Bathing/Sponge Baths**: Ensure the bathroom is warm and non-slip. Respect her privacy.\n* **Foot Care**: Wash feet daily with warm water and dry thoroughly. Check for any redness or sores.\n* **Dressing**: Choose loose, comfortable clothes. If one side is weaker, dress the weaker side first and undress the stronger side first.\n\n#### Fall Prevention Tips\n* **Home Environment**: Keep pathways clear, ensure good lighting, use non-slip mats, and install handrails.\n* **Personal Factors**: Wear well-fitting, non-slip shoes. Be aware of potential side effects of medications.` },
+                    { id: "health-monitoring", title: "2.2 Health Monitoring", content: `You spend the most time with Grandma each day, so please pay close attention to subtle changes in her health and report them promptly.\n\n#### Daily Health Observation\n* **General Condition**: Note any changes in appetite, sleep, mood, or energy levels.\n* **Skin**: Regularly check for redness, sores, or pressure ulcers.\n* **Elimination**: Note any constipation, diarrhea, or difficulty urinating.\n* **Pain**: Look for any verbal or non-verbal signs of pain.\n\n#### Handling Minor Discomfort\n* **Fever**: Dress her in light clothing, encourage fluid intake, and monitor her temperature.\n* **Constipation**: Encourage more water and high-fiber foods.\n\n#### When to Notify the Employer\n* Any significant or sudden change in Grandma's health.\n* Any accident, such as a fall.\n* If Grandma experiences severe symptoms like a high fever that won't go down or difficulty breathing.` },
+                    { id: "communication", title: "2.3 Communication and Cultural Adaptation", content: `#### Understanding Grandma's Tastes and Habits\n* Please remember that Grandma prefers traditional Cantonese flavors, emphasizing ginger and spring onions and cooking methods like steaming and boiling for a light, healthy diet.\n* Avoid cooking spicy or strongly flavored dishes common in Indonesian cuisine.\n\n#### Language Communication\n* Try using simple Cantonese words or phrases. We encourage you to learn.\n* You can also use body language, gestures, pictures, or a mobile translation app to assist.\n\n#### Respect and Patience\nWhen communicating with Grandma, always be respectful and friendly, use a gentle tone, and give her plenty of time.` },
+                    { id: "emergency-response", title: "2.4 Emergency Response", content: `#### Important Contact Numbers\n| Contact/Service | Phone Number |\n| :--- | :--- | :--- |\n| Emergency (Police/Fire/Ambulance) | 999 |\n| Employer's Name ([Please fill in]) | [Please fill in phone number] |\n| Other Family ([Name & Relationship]) | [Please fill in phone number] |\n| Grandma's Doctor ([Doctor's Name]) | [Please fill in clinic number] |\n| Building Management/Security | [Please fill in phone number] |\n\n#### Response Steps\n1.  **Stay Calm**: Take a deep breath and try to compose yourself.\n2.  **Ensure Safety**: First, make sure you and Grandma are in a safe environment.\n3.  **Assess the Situation**: Quickly evaluate Grandma's condition.\n4.  **Call for Help**: If the situation is serious, immediately call "999" for an ambulance, then notify us.` },
+                    { id: "part3", title: "Part 3: Warm Reminders", content: "" },
+                    { id: "warm-tips", title: "3.1-3.4 General Tips", content: `#### Use the Recipe Cards\n* In the beginning, please make good use of the recipe cards we've prepared. They will help you easily master the cooking steps.\n\n#### Kitchen Safety\n* **Using Knives**: Be focused when using knives. Clean and store them properly immediately after use.\n* **Stove and Hot Oil**: Never leave the stove unattended. Be careful of hot oil splashing.\n* **Using a Steamer**: Be careful of hot steam when opening the lid.\n\n#### Maintain Communication with Us\n* We value communication. If you have any questions, uncertainties, or concerns, please do not hesitate to ask us at any time.\n\n#### Initial Period: Mutual Adaptation\n* We understand that you need time to adapt to a new environment. If you don't understand something, please ask. We will do our best to provide assistance and guidance.` }
                 ]
             },
             id: {
                 title: "Buku Panduan Perawatan Nenek",
                 sections: [
-                     { 
-                        id: "introduction", 
-                        title: "Pengantar",
-                        content: `### Untuk [Nama Pembantu/Pembantu] yang terhormat\nSelamat datang di keluarga kami. Kami sangat berterima kasih atas cinta dan usaha Anda. Buku panduan ini disiapkan untuk Anda guna memberikan panduan yang jelas tentang perawatan harian, diet, olahraga, dan pekerjaan rumah tangga untuk Nenek.\nKami percaya bahwa melalui komunikasi dan kerja sama yang baik, Anda dapat memberikan perawatan terbaik. Jika Anda memiliki pertanyaan atau menemukan cara yang lebih baik untuk merawatnya, jangan ragu untuk berkomunikasi dengan kami. Mari kita bekerja sama untuk menciptakan kehidupan yang nyaman, aman, dan menyenangkan bagi Nenek.`
-                    },
-                    {
-                        id: "diet-care",
-                        title: "Poin Perawatan Diet",
-                        content: `Saat menyiapkan makanan untuk Nenek, perhatikan prinsip-prinsip berikut untuk memastikan makanan tersebut enak dan sehat.\n\n**Prinsip Diet**\n* **Rasa Ringan**: Makanan harus ringan, kurangi garam, gula, dan minyak. Gunakan bahan-bahan alami seperti jahe dan daun bawang untuk rasa.\n* **Mudah Dikunyah dan Dicerna**: Semua bahan harus lembut. Misalnya, ikan harus dibuang tulangnya, daging diiris tipis atau dicincang, dan sayuran dimasak hingga lunak.\n* **Gizi Seimbang**: Makanan sehari-hari harus mencakup berbagai jenis makanan.\n* **Porsi Kecil dan Sering (jika perlu)**: Jika nafsu makan Nenek kecil, pertimbangkan pendekatan ini.\n\n**Pengingat Hidrasi Harian**\nPastikan Nenek minum cukup air sepanjang hari.\n\n**Belanja dan Penyimpanan Bahan**\nDisarankan untuk membeli sayuran segar, ikan, dan daging tanpa lemak di awal minggu.`
-                    },
-                    {
-                        id: "weekly-menu",
-                        title: "Rencana Menu Mingguan & Resep",
-                        content: `### Tinjauan Rencana Menu Mingguan\n| Hari | Sarapan | Makan Siang | Makan Malam |\n| :--- | :--- | :--- | :--- |\n| Hari 1 | Bubur, Telur Rebus, Bayam Rebus | Salmon Kukus, Tumis Choy Sum, Nasi Merah | Sup Labu & Babi, Tahu Kukus, Bok Choy Rebus |\n| Hari 2 | Bubur Kacang Merah, Roti Gandum dengan Alpukat, Irisan Apel | Dada Ayam Kukus, Tumis Brokoli, Nasi Merah | Sup Telur Tomat, Labu Kukus, You Choy Rebus |\n| Hari 3 | Oatmeal dengan Blueberry, Telur Rebus, Kiwi | Ikan Laut Kukus, Tumis Sayuran Campur, Nasi Merah | Bubur Rumput Laut & Babi, Kangkung Rebus, Kentang Kukus |\n| Hari 4 | Susu Kedelai Tanpa Gula, Roti Gandum, Pisang | Telur Kukus dengan Daging Cincang, Tumis Bayam, Nasi Merah | Sup Ikan, Ubi Jalar Kukus, Choy Sum Rebus |\n| Hari 5 | Bubur dengan Acar, Telur Rebus, Kismis | Paha Ayam Kukus, Tumis Bok Choy, Nasi Merah | Bubur Labu & Babi, Brokoli Rebus, Tahu Kukus |\n| Hari 6 | Oatmeal dengan Kenari, Roti Gandum, Apel | Ikan Nila Kukus, Tumis You Choy, Nasi Merah | Sup Bihun Ayam, Labu Kukus, Bayam Rebus |\n| Hari 7 | Bubur Kacang Merah, Telur Rebus, Kiwi | Daging Babi Kukus, Tumis Choy Sum, Nasi Merah | Sup Kerang & Labu, Kangkung Rebus, Kentang Kukus |\n\n*Untuk resep detail, silakan merujuk ke Dokumen Google.*`
-                    },
-                    {
-                        id: "daily-exercise",
-                        title: "Latihan Ringan Harian",
-                        content: `Olahraga yang tepat sangat bermanfaat bagi kesehatan fisik dan mental Nenek.\n\n**Persiapan dan Pencegahan**\n* **Keselamatan Utama**: Pastikan lingkungan aman dan bebas dari rintangan.\n* **Sesuai Kemampuan**: Olahraga harus bertahap.\n* **Pendampingan dan Dukungan**: Anda harus menemaninya selama berolahraga.\n\n**Latihan yang Direkomendasikan**\n* **Jalan Kaki**: Bentuk olahraga yang paling sederhana.\n* **Latihan Kursi**: Berbagai latihan dapat dilakukan sambil duduk.\n* **Gerakan Tai Chi Sederhana**: Membantu meningkatkan keseimbangan.`
-                    },
-                    {
-                        id: "housekeeping",
-                        title: "Jadwal Rumah Tangga",
-                        content: `Menjaga kebersihan dan kerapian rumah sama pentingnya untuk kesehatan dan keselamatan Nenek.\n\n**Pekerjaan Harian**\n* **Dapur**: Cuci piring, bersihkan kompor.\n* **Kamar Nenek**: Rapikan tempat tidur, jaga kebersihannya.\n* **Kamar Mandi**: Bersihkan toilet dan wastafel, jaga agar lantai tetap kering.\n\n**Pekerjaan Mingguan**\n* Bersihkan kamar mandi dan dapur secara menyeluruh.\n* Vakum dan pel semua lantai.\n* Ganti sprei, dll.`
-                    },
-                     {
-                        id: "emergency",
-                        title: "Tanggapan Darurat",
-                        content: `Sangat penting untuk bersiap menghadapi keadaan darurat.\n\n**Nomor Kontak Penting**\n| Kontak/Layanan | Nomor Telepon |\n| :--- | :--- |\n| Darurat (Polisi/Pemadam/Ambulans) | 999 |\n| Nama Majikan | [Silakan isi nomor telepon] |\n| Anggota Keluarga Lain | [Silakan isi nomor telepon] |\n\n**Langkah-langkah Tanggapan**\n1.  Tetap tenang\n2.  Pastikan keamanan\n3.  Menilai situasi\n4.  Panggil bantuan`
-                    }
+                    { id: "introduction", title: "Pengantar", content: `### Untuk [Nama Pembantu/Pembantu] yang terhormat\nSelamat datang di keluarga kami. Kami sangat berterima kasih atas cinta dan usaha Anda. Buku panduan ini disiapkan untuk Anda guna memberikan panduan yang jelas tentang perawatan harian, diet, olahraga, dan pekerjaan rumah tangga untuk Nenek.\nKami percaya bahwa melalui komunikasi dan kerja sama yang baik, Anda dapat memberikan perawatan terbaik. Buku panduan ini adalah titik awal. Kami mendorong Anda, jika ada pertanyaan atau menemukan cara perawatan yang lebih cocok untuk Nenek, untuk berkomunikasi dengan kami secara jujur kapan saja. Mari kita bekerja sama untuk menciptakan kehidupan yang nyaman, aman, dan menyenangkan bagi Nenek.` },
+                    { id: "part1", title: "Bagian 1: Kehidupan & Diet Sehari-hari", content: "" },
+                    { id: "diet-care", title: "1.1 Poin Perawatan Diet", content: `#### Prinsip Diet\n* **Rasa Ringan**: Diet Nenek harus ringan, meminimalkan penggunaan garam, gula, dan minyak. Saat memasak, gunakan bahan-bahan alami seperti jahe dan daun bawang untuk rasa, yang merupakan praktik tradisional Kanton. Hindari penggunaan MSG atau saus tinggi garam.\n* **Mudah Dikunyah dan Dicerna**: Semua bahan harus lembut. Misalnya, ikan harus dibuang tulangnya, daging diiris tipis atau dicincang, dan sayuran dimasak hingga empuk. Bubur dan sup adalah pilihan yang sangat baik.\n* **Gizi Seimbang**: Makanan sehari-hari harus mencakup berbagai makanan: biji-bijian, daging dan protein, sayuran dan buah-buahan, serta produk susu atau makanan kaya kalsium.\n* **Porsi Kecil dan Sering (jika perlu)**: Jika Nenek memiliki nafsu makan yang kecil, pertimbangkan untuk menyajikan porsi kecil lebih sering untuk membantu menjaga gula darah stabil dan memastikan nutrisi yang cukup.\n\n#### Pengingat Hidrasi Harian\nCukup hidrasi sangat penting. Pastikan Nenek minum cukup air setiap hari. Selain air putih, teh krisan ringan atau sup bening juga bisa diberikan.\n\n#### Belanja dan Penyimpanan Bahan\n* **Belanja di Pasar**: Disarankan untuk membeli sayuran segar, ikan, daging tanpa lemak, dada ayam, dan tahu di awal minggu dan menyimpannya dengan benar di lemari es.\n* **Bahan Pokok**: Simpan bahan-bahan yang tidak mudah rusak seperti beras merah, oatmeal, kacang merah, rumput laut, dan bihun.\n* **Bumbu**: Bumbu dasar harus mencakup kecap asin, minyak wijen, minyak zaitun, garam, jahe, dan daun bawang.` },
+                    { id: "weekly-menu", title: "1.2 Rencana Menu Mingguan & Resep", content: `### Tinjauan Rencana Menu Mingguan\n| Hari | Sarapan | Makan Siang | Makan Malam |\n| :--- | :--- | :--- | :--- |\n| Hari 1 | Bubur, Telur Rebus, Bayam Rebus | Salmon Kukus, Tumis Choy Sum, Nasi Merah | Sup Labu & Babi, Tahu Kukus, Bok Choy Rebus |\n| Hari 2 | Bubur Kacang Merah, Roti Gandum dengan Alpukat, Irisan Apel | Dada Ayam Kukus, Tumis Brokoli, Nasi Merah | Sup Telur Tomat, Labu Kukus, You Choy Rebus |\n| Hari 3 | Oatmeal dengan Blueberry, Telur Rebus, Kiwi | Ikan Laut Kukus, Tumis Sayuran Campur, Nasi Merah | Bubur Rumput Laut & Babi, Kangkung Rebus, Kentang Kukus |\n| Hari 4 | Susu Kedelai Tanpa Gula, Roti Gandum, Pisang | Telur Kukus dengan Daging Cincang, Tumis Bayam, Nasi Merah | Sup Ikan, Ubi Jalar Kukus, Choy Sum Rebus |\n| Hari 5 | Bubur dengan Acar, Telur Rebus, Kismis | Paha Ayam Kukus, Tumis Bok Choy, Nasi Merah | Bubur Labu & Babi, Brokoli Rebus, Tahu Kukus |\n| Hari 6 | Oatmeal dengan Kenari, Roti Gandum, Apel | Ikan Nila Kukus, Tumis You Choy, Nasi Merah | Sup Bihun Ayam, Labu Kukus, Bayam Rebus |\n| Hari 7 | Bubur Kacang Merah, Telur Rebus, Kiwi | Daging Babi Kukus, Tumis Choy Sum, Nasi Merah | Sup Kerang & Labu, Kangkung Rebus, Kentang Kukus |\n\n> Untuk kenyamanan Anda, kami akan menyiapkan kartu resep sederhana untuk setiap hidangan, yang mencantumkan langkah-langkah utamanya.` },
+                    { id: "daily-exercise", title: "1.3 Latihan Ringan Harian", content: `#### Persiapan dan Pencegahan\n* **Keselamatan Utama**: Pastikan lingkungan sekitar aman dan bebas dari bahaya tersandung. Pilih pakaian yang sesuai, nyaman, menyerap keringat, dan sepatu yang pas dan tidak licin.\n* **Sesuai Kemampuan**: Latihan harus dilakukan secara bertahap. Jika Nenek merasa tidak nyaman, segera hentikan.\n* **Waktu**: Hindari berolahraga segera setelah makan. Sebaiknya tunggu sekitar 1 jam.\n* **Pendampingan dan Dukungan**: Anda harus menemani dan mendukung Nenek selama berolahraga, terutama untuk latihan keseimbangan.\n\n#### Latihan yang Direkomendasikan\n* **Jalan Kaki**: Latihan paling sederhana dan nyaman. Usahakan setidaknya 30 menit setiap hari.\n* **Latihan Kursi**: Seperti berjalan di tempat sambil duduk, mengangkat lengan, dan meregangkan kaki.\n* **Gerakan Tai Chi Sederhana**: Gerakan lembut yang membantu meningkatkan keseimbangan.\n* **Latihan Keseimbangan dan Pencegahan Jatuh**: Seperti berdiri dengan satu kaki (dengan dukungan).\n* **Aktivitas Penguatan Otot**: Gunakan berat badan, botol air, atau karung pasir untuk resistensi.\n\n| Waktu | Aktivitas yang Disarankan | Durasi (menit) | Catatan/Fokus |\n| :--- | :--- | :--- | :--- |\n| Pagi | Peregangan ringan atau latihan kursi sederhana | 10-15 | Membangunkan tubuh, meningkatkan fleksibilitas sendi |\n| Pagi/Sore | Berjalan (dalam/luar ruangan) atau Tai Chi sederhana | 15-20 | Latihan aerobik ringan, baik untuk jantung dan paru-paru |\n| Sore | Latihan keseimbangan atau penguatan otot ringan | 10-15 | Meningkatkan keseimbangan, menjaga kekuatan otot |` },
+                    { id: "housekeeping", title: "1.4 Jadwal Rumah Tangga", content: `Menjaga kebersihan dan kerapian rumah sama pentingnya untuk kesehatan dan keselamatan Nenek.\n\n| Kategori | Tugas | Frekuensi | Catatan |\n| :--- | :--- | :--- | :--- |\n| Harian | Merapikan tempat tidur, kamar Nenek | Setiap Hari | Pastikan jalur lapang |\n| | Membersihkan toilet, wastafel; menjaga kamar mandi tetap kering | Setiap Hari | Mencegah tergelincir |\n| | Mencuci piring, membersihkan area memasak | Setelah setiap makan | Menjaga kebersihan |\n| | Membuang sampah, mengganti kantong | Setiap Hari | |\n| Mingguan | Membersihkan dapur dan kamar mandi secara menyeluruh | Seminggu sekali | |\n| | Menyedot debu dan mengepel semua lantai | 1-2 kali seminggu | |\n| | Mengganti sprei, sarung bantal, selimut | Seminggu sekali | |\n| | Membeli bahan makanan dan kebutuhan | 1-2 kali seminggu | Sesuaikan dengan rencana makan |\n| Bulanan | Membersihkan filter AC, kipas angin, bagian dalam kulkas | Sebulan sekali | |`},
+                    { id: "part2", title: "Bagian 2: Keterampilan Perawatan Praktis", content: "" },
+                    { id: "daily-living", title: "2.1 Perawatan Kehidupan Sehari-hari", content: `#### Membantu Gerakan dan Perpindahan yang Aman\n* **Keterampilan Mengangkat/Mendukung**: Jelaskan sebelum bergerak, jaga Nenek dekat dengan tubuh Anda, pertahankan punggung lurus, tekuk lutut, dan gunakan otot kaki Anda. Hindari memutar pinggang.\n* **Bangun/Duduk**: Saat bangun, minta dia duduk di tepi tempat tidur sejenak untuk mencegah pusing. Bimbing dia untuk duduk perlahan.\n\n#### Perawatan Kebersihan Pribadi\n* **Kebersihan Mulut**: Bantu menyikat gigi atau membersihkan gigi palsu setiap hari. Lakukan dengan lembut.\n* **Mandi/Seka**: Pastikan kamar mandi hangat dan tidak licin. Hargai privasinya.\n* **Perawatan Kaki**: Cuci kaki setiap hari dengan air hangat dan keringkan secara menyeluruh. Periksa adanya kemerahan atau luka.\n* **Berpakaian**: Pilih pakaian yang longgar dan nyaman. Jika satu sisi lebih lemah, kenakan pakaian di sisi yang lebih lemah terlebih dahulu dan lepas dari sisi yang lebih kuat terlebih dahulu.\n\n#### Tips Pencegahan Jatuh\n* **Lingkungan Rumah**: Jaga agar jalur tetap bersih, pastikan pencahayaan yang baik, gunakan alas anti selip, dan pasang pegangan tangan.\n* **Faktor Pribadi**: Kenakan sepatu yang pas dan tidak licin. Waspadai kemungkinan efek samping obat.` },
+                    { id: "health-monitoring", title: "2.2 Pemantauan Kesehatan", content: `Anda menghabiskan waktu paling banyak dengan Nenek setiap hari, jadi harap perhatikan perubahan kecil dalam kesehatannya dan laporkan segera.\n\n#### Observasi Kesehatan Harian\n* **Kondisi Umum**: Catat setiap perubahan nafsu makan, tidur, suasana hati, atau tingkat energi.\n* **Kulit**: Periksa secara teratur apakah ada kemerahan, luka, atau borok akibat tekanan.\n* **Eliminasi**: Catat sembelit, diare, atau kesulitan buang air kecil.\n* **Nyeri**: Cari tanda-tanda nyeri verbal atau non-verbal.\n\n#### Menangani Ketidaknyamanan Ringan\n* **Demam**: Kenakan pakaian tipis, anjurkan asupan cairan, dan pantau suhunya.\n* **Sembelit**: Anjurkan lebih banyak air dan makanan berserat tinggi.\n\n#### Kapan Harus Memberi Tahu Majikan\n* Setiap perubahan kesehatan Nenek yang signifikan atau tiba-tiba.\n* Setiap kecelakaan, seperti jatuh.\n* Jika Nenek mengalami gejala parah seperti demam tinggi yang tidak turun atau kesulitan bernapas.` },
+                    { id: "communication", title: "2.3 Komunikasi dan Adaptasi Budaya", content: `#### Memahami Selera dan Kebiasaan Nenek\n* Harap diingat bahwa Nenek lebih menyukai cita rasa tradisional Kanton, dengan penekanan pada jahe dan daun bawang serta metode memasak seperti mengukus dan merebus untuk diet yang ringan dan sehat.\n* Hindari memasak hidangan pedas atau beraroma kuat yang umum dalam masakan Indonesia.\n\n#### Komunikasi Bahasa\n* Cobalah menggunakan kata atau frasa Kanton sederhana. Kami mendorong Anda untuk belajar.\n* Anda juga dapat menggunakan bahasa tubuh, isyarat, gambar, atau aplikasi terjemahan seluler untuk membantu.\n\n#### Rasa Hormat dan Kesabaran\nSaat berkomunikasi dengan Nenek, selalu bersikap hormat dan ramah, gunakan nada yang lembut, dan berikan dia banyak waktu.` },
+                    { id: "emergency-response", title: "2.4 Tanggap Darurat", content: `#### Nomor Kontak Penting\n| Kontak/Layanan | Nomor Telepon |\n| :--- | :--- | :--- |\n| Darurat (Polisi/Pemadam/Ambulans) | 999 |\n| Nama Majikan ([Harap isi]) | [Harap isi nomor telepon] |\n| Keluarga Lain ([Nama & Hubungan])| [Harap isi nomor telepon] |\n| Dokter Nenek ([Nama Dokter]) | [Harap isi nomor klinik] |\n| Manajemen Gedung/Keamanan | [Harap isi nomor telepon] |\n\n#### Langkah-langkah Tanggapan\n1.  **Tetap Tenang**: Ambil napas dalam-dalam dan usahakan untuk menenangkan diri.\n2.  **Pastikan Keselamatan**: Pertama, pastikan Anda dan Nenek berada di lingkungan yang aman.\n3.  **Nilai Situasi**: Evaluasi kondisi Nenek dengan cepat.\n4.  **Panggil Bantuan**: Jika situasinya serius, segera hubungi "999" untuk ambulans, lalu beri tahu kami.` },
+                    { id: "part3", title: "Bagian 3: Pengingat Hangat", content: "" },
+                    { id: "warm-tips", title: "3.1-3.4 Tips Umum", content: `#### Gunakan Kartu Resep\n* Pada awalnya, harap manfaatkan kartu resep yang telah kami siapkan. Kartu ini akan membantu Anda menguasai langkah-langkah memasak dengan mudah.\n\n#### Keselamatan Dapur\n* **Menggunakan Pisau**: Fokus saat menggunakan pisau. Bersihkan dan simpan dengan benar segera setelah digunakan.\n* **Kompor dan Minyak Panas**: Jangan pernah meninggalkan kompor tanpa pengawasan. Hati-hati dengan cipratan minyak panas.\n* **Menggunakan Panci Kukus**: Hati-hati dengan uap panas saat membuka tutupnya.\n\n#### Jaga Komunikasi dengan Kami\n* Kami menghargai komunikasi. Jika Anda memiliki pertanyaan, ketidakpastian, atau kekhawatiran, jangan ragu untuk bertanya kepada kami kapan saja.\n\n#### Periode Awal: Adaptasi Bersama\n* Kami mengerti bahwa Anda memerlukan waktu untuk beradaptasi dengan lingkungan baru. Jika Anda tidak mengerti sesuatu, silakan bertanya. Kami akan melakukan yang terbaik untuk memberikan bantuan dan bimbingan.` }
                 ]
             }
         };
 
-        const langSwitcher = document.getElementById('lang-switcher');
-        const headerTitle = document.getElementById('header-title');
-        const mainContent = document.getElementById('main-content');
-        const sidebarNav = document.getElementById('sidebar-nav');
-        const mobileNav = document.getElementById('mobile-nav');
-        
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeMobileMenu = document.getElementById('close-mobile-menu');
+        const converter = new showdown.Converter({ tables: true, simplifiedAutoLink: true, openLinksInNewWindow: true });
 
-        const converter = new showdown.Converter({tables: true});
+        function initApp() {
+            const langSwitcher = document.getElementById('lang-switcher');
+            const headerTitle = document.getElementById('header-title');
+            const mainContent = document.getElementById('main-content');
+            const sidebarNav = document.getElementById('sidebar-nav');
+            const mobileNav = document.getElementById('mobile-nav');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const closeMobileMenu = document.getElementById('close-mobile-menu');
 
-        function updateContent(lang) {
-            const data = contentData[lang];
-            
-            // Update header title
-            headerTitle.textContent = data.title;
-            
-            // Clear existing content
-            mainContent.innerHTML = '';
-            sidebarNav.innerHTML = '';
-            mobileNav.innerHTML = '';
+            function updateContent(lang) {
+                const data = contentData[lang];
+                headerTitle.textContent = data.title;
+                mainContent.innerHTML = '';
+                sidebarNav.innerHTML = '';
+                mobileNav.innerHTML = '';
 
-            // Populate content and navigation
-            data.sections.forEach((section, index) => {
-                // Main Content
-                const sectionContainer = document.createElement('div');
-                sectionContainer.id = section.id;
-                // We use this as a scroll target, content is inside the card
-                mainContent.appendChild(sectionContainer);
-
-                const sectionCard = document.createElement('div');
-                sectionCard.className = 'bg-white p-6 rounded-lg shadow-md mb-6';
-                
-                const title = document.createElement('h2');
-                title.className = 'text-2xl font-bold mb-4 text-gray-800 border-b pb-2';
-                title.textContent = section.title;
-                sectionCard.appendChild(title);
-                
-                const contentDiv = document.createElement('div');
-                contentDiv.className = 'prose max-w-none';
-                contentDiv.innerHTML = converter.makeHtml(section.content);
-                sectionCard.appendChild(contentDiv);
-                
-                mainContent.appendChild(sectionCard);
-
-                // Sidebar Navigation
-                const navLink = document.createElement('a');
-                navLink.href = `#${section.id}`;
-                navLink.textContent = section.title;
-                navLink.className = 'nav-link block text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-md mb-1 cursor-pointer';
-                if (index === 0) navLink.classList.add('active');
-                
-                navLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.getElementById(section.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                data.sections.forEach(section => {
+                    // Create main content card
+                    const sectionCard = document.createElement('div');
+                    sectionCard.id = section.id;
+                    sectionCard.className = 'bg-white p-4 sm:p-6 rounded-lg shadow-md mb-6 scroll-mt-20'; // scroll-mt-20 for sticky header offset
                     
-                    document.querySelectorAll('#sidebar-nav .nav-link').forEach(l => l.classList.remove('active'));
-                    e.target.classList.add('active');
-                });
-                sidebarNav.appendChild(navLink);
+                    const title = document.createElement('h2');
+                    title.className = 'text-2xl font-bold mb-4 text-gray-800';
+                    if (section.content) { // Don't add border to empty titles
+                        title.classList.add('border-b', 'pb-2');
+                    }
+                    title.textContent = section.title;
+                    sectionCard.appendChild(title);
 
-                // Mobile Navigation
-                const mobileNavLink = navLink.cloneNode(true);
-                 mobileNavLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    mobileMenu.classList.add('hidden'); // Close menu on click
-                    // Timeout to allow menu to close before scrolling
-                    setTimeout(() => {
-                        document.getElementById(section.id).scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
+                    if (section.content) {
+                        const contentDiv = document.createElement('div');
+                        contentDiv.className = 'prose max-w-none';
+                        contentDiv.innerHTML = converter.makeHtml(section.content);
+                        sectionCard.appendChild(contentDiv);
+                    }
+                    
+                    mainContent.appendChild(sectionCard);
+
+                    // Create nav links
+                    const navLink = document.createElement('a');
+                    navLink.href = `#${section.id}`;
+                    navLink.textContent = section.title;
+                    navLink.className = 'nav-link block text-gray-700 hover:bg-gray-200 px-4 py-2 rounded-md mb-1 cursor-pointer';
+                    if (section.content === "") { // Style for part headers
+                        navLink.classList.add('font-bold', 'text-gray-900', 'mt-4');
+                        navLink.classList.remove('text-gray-700', 'hover:bg-gray-200', 'px-4');
+                    }
+                    
+                    const mobileNavLink = navLink.cloneNode(true);
+                    
+                    const navClickHandler = (e) => {
+                        e.preventDefault();
+                        document.getElementById(section.id).scrollIntoView({ behavior: 'smooth' });
+                        if (mobileMenu.offsetParent !== null) { // if mobile menu is visible
+                            mobileMenu.classList.add('hidden');
+                        }
+                    };
+
+                    navLink.addEventListener('click', navClickHandler);
+                    mobileNavLink.addEventListener('click', navClickHandler);
+
+                    sidebarNav.appendChild(navLink);
+                    mobileNav.appendChild(mobileNavLink);
                 });
-                mobileNav.appendChild(mobileNavLink);
+
+                // Intersection Observer to highlight active nav link
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            document.querySelectorAll('.nav-link').forEach(link => {
+                                link.classList.remove('active');
+                                if (link.getAttribute('href') === `#${entry.target.id}`) {
+                                    link.classList.add('active');
+                                }
+                            });
+                        }
+                    });
+                }, { rootMargin: "-50% 0px -50% 0px" });
+
+                document.querySelectorAll('main > div').forEach(section => {
+                    observer.observe(section);
+                });
+            }
+
+            langSwitcher.addEventListener('change', (e) => updateContent(e.target.value));
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+            closeMobileMenu.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target === mobileMenu) mobileMenu.classList.add('hidden');
             });
 
-             // Set first item as active on load
-            document.querySelector('#sidebar-nav .nav-link').classList.add('active');
+            updateContent('zh');
         }
-        
-        // Language switcher event
-        langSwitcher.addEventListener('change', (e) => {
-            updateContent(e.target.value);
-        });
 
-        // Mobile menu events
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-        });
-
-        closeMobileMenu.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
-
-        // Close mobile menu when clicking outside
-         mobileMenu.addEventListener('click', (e) => {
-            if (e.target === mobileMenu) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
-
-
-        // Initial load
-        updateContent('zh');
-
+        initApp();
     </script>
 </body>
 </html>
